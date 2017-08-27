@@ -106,7 +106,7 @@ if (trim($CNTRL_LOG_FILE) == "") {
 
         <p>Known Issues:
         <ul>
-            <li>Only Supports RaspberryPi at current due using 'gpio read X' [wiringpi], may incorrently toggle output -- UNTESTED</li>
+            <li>None</li>
         </ul>
 
         <p>Configuration:
@@ -115,8 +115,7 @@ if (trim($CNTRL_LOG_FILE) == "") {
             <li>1. Setup Your GPIO Output under <a href="http://<? echo $_SERVER['SERVER_NAME'] ?>/channeloutputs.php#tab-other">Channel Outputs</a> > Other
             </li>
             <li>2. Return here and there should be buttons to toggle the state of the GPIO Output, it will toggle from
-                the current setting to either LOW or HIGH depending on the current GPIO value
-
+                the current setting to either LOW or HIGH depending on the current GPIO value.
             </li>
             <li>3. Optionally Set the toggle time (delay between on and off), default 2000ms ( 2 seconds )</li>
 
@@ -201,16 +200,22 @@ if (trim($CNTRL_LOG_FILE) == "") {
                 $channel_gpio_pin = explode("=", explode(";", $channel_config_explode[4])[0])[1];
                 $channel_gpio_invert = explode("=", explode(";", $channel_config_explode[4])[1])[1];
 
-                //get current GPIO value
-                $current_gpio_value = shell_exec("/usr/local/bin/gpio -g read $channel_gpio_pin");
-                // attempt to only set value values,
-                if (isset($current_gpio_value) && in_array($current_gpio_value, array('1', '0'))) {
-                    $toggle_output_val = $current_gpio_value;
-                } else {
-                    $toggle_output_val = 0;//default
+                //get current GPIO value, so we have somewhere to start the toggle
+                //use a different method for the BBB
+                if ($settings['Platform'] == "BeagleBone Black"){
+                    $current_gpio_value = shell_exec("cat /sys/class/gpio/gpio$channel_gpio_pin/value");
+                }else{
+                    $current_gpio_value = shell_exec("/usr/local/bin/gpio -g read $channel_gpio_pin");
                 }
 
-                //if the channel should be inverted start with a LOW (opposite of the current calue), it'll toggle LOW then HIGH
+                // attempt to only set valid values
+                if (isset($current_gpio_value) && in_array($current_gpio_value, array('1', '0'))) {
+                    $toggle_output_val = $current_gpio_value;
+                } else{
+                    $toggle_output_val = 0;
+                }
+
+                //if the channel should be inverted start with a LOW (opposite of the current value), it'll toggle LOW then HIGH
                 //basically toggle opposite
                 if ($channel_gpio_invert == 1) {
                     $toggle_output_val = 0;
