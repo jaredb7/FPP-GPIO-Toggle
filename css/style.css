@@ -1,0 +1,77 @@
+.button {
+    height: 32px; /*same as the width*/
+    display: block;
+    padding: 6px;
+    /*
+    background-color:#ff0000;
+    */
+    background-color: #58aa00;
+    border: 1px solid #58aa00; /*same colour as the background*/
+    color: #fff;
+
+    text-align: center;
+    text-shadow: 2px 2px #555;
+
+    /*give the button a small drop shadow*/
+    -webkit-box-shadow: 0 0 4px rgba(0, 0, 0, .75);
+    -moz-box-shadow: 0 0 4px rgba(0, 0, 0, .75);
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, .75);
+}
+
+.button:hover {
+    background: #490;
+    border: 1px solid #490;
+    /*reduce the size of the shadow to give a pushed effect*/
+    -webkit-box-shadow: 0px 0px 5px rgba(0, 0, 0, .75);
+    -moz-box-shadow: 0px 0px 5px rgba(0, 0, 0, .75);
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, .75);
+}
+
+input:disabled {
+    background-color: grey;
+    border: 1px solid grey; /*same colour as the background*/
+}
+
+input:disabled:hover {
+    background-color: grey !important;
+    border: 1px solid grey !important; /*same colour as the background*/
+    /*make same as std button so it does nothing*/
+    -webkit-box-shadow: 0 0 4px rgba(0, 0, 0, .75) !important;
+    -moz-box-shadow: 0 0 4px rgba(0, 0, 0, .75) !important;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, .75) !important;
+    cursor: not-allowed;
+}
+
+.channelOutputTable {
+    border-collapse: collapse;
+}
+
+.tblheader {
+    background-color: #CCC;
+    text-align: center;
+}
+
+.tblheader td {
+    border: 2px solid #888888;
+    text-align: center;
+    font-weight: bold;
+}
+
+tr.rowUniverseDetails {
+    border: thin solid;
+    border-color: #CCC;
+}
+
+tr.rowUniverseDetails td {
+    padding: 1px 5px;
+}
+
+.channelOutputTable {
+    border: thin;
+    border-color: #333;
+    border-collapse: collapse;
+}
+
+tr.rowGpioDetails {
+    border: thin solid #ccc;
+}
