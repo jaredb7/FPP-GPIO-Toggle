@@ -167,6 +167,7 @@ if (trim($CNTRL_LOG_FILE) == "") {
         <br>
         <br>
 
+        <h3>GPIO Outputs</h3>
         <table id="tblGpioOutputs" class="channelOutputTable">
             <tr class="tblheader">
                 <td width="5%" align="left">Output #</td>
