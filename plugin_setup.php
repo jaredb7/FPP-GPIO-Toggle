@@ -122,8 +122,7 @@ if (trim($CNTRL_LOG_FILE) == "") {
         </ul>
         <p>
 
-        <p>To report a bug, please file it against the FPP-GPIO-Toggle plugin project on Git:
-            https://github.com/jaredb7/FPP-Plugin-GPIO-Toggle</p>
+        <p>To report a bug, please file it against the FPP-GPIO-Toggle plugin project on Git: <?echo $gitURL?></p>
 
         <form method="post"
               action="http://<? echo $_SERVER['SERVER_NAME'] ?>/plugin.php?plugin=<? echo $pluginName; ?>&page=plugin_setup.php">
@@ -131,7 +130,7 @@ if (trim($CNTRL_LOG_FILE) == "") {
             $restart = 0;
             $reboot = 0;
 
-            echo "ENABLE PLUGIN: ";
+            echo "<b>ENABLE PLUGIN:</b> ";
             //if($ENABLED== 1 || $ENABLED == "on") {
             //		echo "<input type=\"checkbox\" checked name=\"ENABLED\"> \n";
             PrintSettingCheckbox(" Plugin" . $pluginName, "ENABLED", $restart = 0, $reboot = 0, "ON", "OFF", $pluginName, $callbackName = "");
@@ -141,14 +140,17 @@ if (trim($CNTRL_LOG_FILE) == "") {
             ?>
 
             <br>
+            <br>
 
-            <p><b>Toggle Time (in ms)</b></p>
+            <b>Toggle Time (in ms)</b>
             <input type="text" size="15" value="<? if ($TOGGLE_TIME != "") {
                 echo $TOGGLE_TIME;
             } else {
                 echo "2000";
             } ?>" name="TOGGLE_TIME" id="TOGGLE_TIME">
+            <small>Set the toggle time (delay between on and off)</small>
 
+            <br>
             <br>
             <input id="submit_button" name="submit" type="submit" class="buttons" value="Save Config">
 
@@ -224,13 +226,13 @@ if (trim($CNTRL_LOG_FILE) == "") {
                 //If enabled generate a button
                 if (strtolower($channel_type) == 'gpio') {
                     ?>
-                    <tr class="rowGpioDetails">
+                    <tr class="rowGpioDetails <? echo $channel_enabled == 0 ? 'rowDisabled' : '' ?>">
                         <td align="center"><? echo $channel_gpio_pin ?></td>
-                        <td><? echo $channel_enabled == 1 ? '<b>Yes</b>' : 'No' ?></td>
-                        <td><? echo $channel_type ?></td>
-                        <td><? echo $channel_start_channel ?></td>
-                        <td><? echo $channel_gpio_invert == 1 ? 'Yes' : 'No' ?></td>
-                        <td><? echo $current_gpio_value == 1 ? 'HIGH (1)' : 'LOW (0)' ?></td>
+                        <td align="center"><? echo $channel_enabled == 1 ? '<b>Yes</b>' : 'No' ?></td>
+                        <td align="center"><? echo $channel_type ?></td>
+                        <td align="center"><? echo $channel_start_channel ?></td>
+                        <td align="center"><? echo $channel_gpio_invert == 1 ? 'Yes' : 'No' ?></td>
+                        <td align="center"><? echo $current_gpio_value == 1 ? 'HIGH (1)' : 'LOW (0)' ?></td>
                         <td>
                             <input class="button"
                                    onClick="ToggleGpio(<? echo $channel_gpio_pin; ?>,true,<? echo $toggle_output_val; ?>,<? echo $TOGGLE_TIME; ?>);"

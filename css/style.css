@@ -75,3 +75,8 @@ tr.rowUniverseDetails td {
 tr.rowGpioDetails {
     border: thin solid #ccc;
 }
+
+tr.rowDisabled {
+    background-color: grey;
+    border: 1px solid grey; /*same colour as the background*/
+}
