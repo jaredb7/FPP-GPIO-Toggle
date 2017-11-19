@@ -49,9 +49,9 @@ if (file_exists($pluginConfigFile)) {
 
 
 //Set a default value
-if (trim($CNTRL_LOG_FILE) == "") {
-    $CNTRL_LOG_FILE = "/tmp/FPP.GPIO-Toggle.log";
-}
+//if (trim($CNTRL_LOG_FILE) == "") {
+//    $CNTRL_LOG_FILE = "/tmp/FPP.GPIO-Toggle.log";
+//}
 
 ?>
 
@@ -111,7 +111,7 @@ if (trim($CNTRL_LOG_FILE) == "") {
 
         <p>Configuration:
         <ul>
-            <li>This Plugin uses the GPIO Outputs set under Channel Outputs</li>
+            <li>This plugin uses the GPIO Outputs set under Channel Outputs and allows you to control them directly via the web interface</li>
             <li>1. Setup Your GPIO Output under <a href="http://<? echo $_SERVER['SERVER_NAME'] ?>/channeloutputs.php#tab-other">Channel Outputs</a> > Other
             </li>
             <li>2. Return here and there should be buttons to toggle the state of the GPIO Output, it will toggle from
