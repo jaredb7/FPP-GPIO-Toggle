@@ -183,27 +183,32 @@ if (file_exists($pluginConfigFile)) {
             //Read the channelouputs file in the root of the fpp storage media
             // ./channeloutputs
             //Write a copy locally as well
-            $channeloutputs_file_contents = file_get_contents($settings['channelOutputsFile']);
+            $channeloutputs_file_contents = file_get_contents($settings['co-other']);
 
             //Explode the contents by new lines first, then process each fo the entries separately
-            $exploded_channel_output_data = explode("\n", $channeloutputs_file_contents);
+            //$exploded_channel_output_data = explode("\n", $channeloutputs_file_contents);
+
+            $exploded_channel_output_data = json_decode($channeloutputs_file_contents,true);
             //loop over each line and extract info
-            foreach ($exploded_channel_output_data as $row => $channel_config_data) {
+            foreach ($exploded_channel_output_data['channelOutputs'] as $channel_config_data) {
 
-                $channel_config_explode = explode(",", $channel_config_data);
+//                $channel_config_explode = explode(",", $channel_config_data);
                 //first entry is if that output is enabled or now
-                $channel_enabled = $channel_config_explode[0];
+                $channel_enabled = $channel_config_data['enabled'];
                 //channel type
-                $channel_type = $channel_config_explode[1];
+                $channel_type = $channel_config_data['type'];
                 //channel start
-                $channel_start_channel = $channel_config_explode[2];
+                $channel_start_channel = $channel_config_data['startChannel'];
                 //channel length/range
-                $channel_length = $channel_config_explode[3];
+                $channel_length = $channel_config_data['channelCount'];
                 //gpio & invert
-                $channel_gpio_pin = explode("=", explode(";", $channel_config_explode[4])[0])[1];
-                $channel_gpio_invert = explode("=", explode(";", $channel_config_explode[4])[1])[1];
+                //$channel_gpio_pin = explode("=", explode(";", $channel_config_explode[4])[0])[1];
+				$channel_gpio_pin = $channel_config_data['gpio'];
 
-                //get current GPIO value, so we have somewhere to start the toggle
+				//$channel_gpio_invert = explode("=", explode(";", $channel_config_explode[4])[1])[1];
+				$channel_gpio_invert = $channel_config_data['invert'];
+
+				//get current GPIO value, so we have somewhere to start the toggle
                 //use a different method for the BBB
                 if ($settings['Platform'] == "BeagleBone Black"){
                     $current_gpio_value = shell_exec("cat /sys/class/gpio/gpio$channel_gpio_pin/value");
